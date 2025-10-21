@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 中国股市数据分析平台
 
 基于 Dash 框架的交互式股市数据分析和可视化平台，提供沪深两市指数分析、融资融券数据分析以及相关性分析功能。
@@ -239,3 +240,7 @@ graph TD
 **项目开发**: ESIEE Paris - Python 2 Data Project  
 **开发时间**: 2025年  
 **技术栈**: Python, Dash, Plotly, Pandas, Bootstrap
+=======
+# data_project
+data_project of python2
+>>>>>>> 6668b385e97d8b1ddc543e318a736b80cb936690
