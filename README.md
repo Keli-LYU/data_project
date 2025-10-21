@@ -233,13 +233,3 @@ graph TD
 ### 数据声明
 
 本项目使用的数据来源于阿里云天池公开数据集平台（https://tianchi.aliyun.com/），所有数据均为公开数据集，仅用于教学和学术研究目的。数据的使用遵循阿里云天池平台的数据使用协议。
-
----
-
-**项目开发**: ESIEE Paris - Python 2 Data Project  
-**开发时间**: 2025年  
-**技术栈**: Python, Dash, Plotly, Pandas, Bootstrap
-=======
-# data_project
-data_project of python2
->>>>>>> 6668b385e97d8b1ddc543e318a736b80cb936690
