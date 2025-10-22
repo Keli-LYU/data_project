@@ -125,6 +125,7 @@ def main():
         port=APP_PORT,
         debug=DEBUG_MODE
     )
+    server = app.server
 
 
 if __name__ == '__main__':
