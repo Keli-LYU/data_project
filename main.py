@@ -40,7 +40,7 @@ def create_app():
         ],
         suppress_callback_exceptions=True,
         title=APP_TITLE,
-        update_title="加载中..."
+        update_title="Loading..."
     )
     
     # 创建应用布局
@@ -95,15 +95,15 @@ def main():
     print("=" * 60)
     
     # 检查并处理数据
-    print("\n正在检查数据文件...")
+    print("\nChecking data files...")
     try:
         # 处理并保存清洗后的数据
-        print("正在处理数据...")
+        print("Processing data...")
         process_and_save_all_data()
-        print("✓ 数据处理完成")
+        print("Data processing complete.")
     except Exception as e:
-        print(f"✗ 数据处理失败: {e}")
-        print("\n请确保以下数据文件存在于 data/raw 目录:")
+        print(f"Data processing failed: {e}")
+        print("\nPlease ensure the following data files exist in the data/raw directory:")
         print("  - sh_index.csv")
         print("  - sz_index.csv")
         print("  - sh_margin_trade.csv")
@@ -111,13 +111,13 @@ def main():
         sys.exit(1)
     
     # 创建应用
-    print("\n正在启动应用...")
+    print("\nStarting application...")
     app = create_app()
     
     # 运行服务器
-    print(f"\n✓ 应用已启动!")
-    print(f"\n访问地址: http://{APP_HOST}:{APP_PORT}")
-    print("\n按 Ctrl+C 停止服务器")
+    print(f"\nApplication started successfully!")
+    print(f"\nAccess at: http://{APP_HOST}:{APP_PORT}")
+    print("\nPress Ctrl+C to stop the server")
     print("=" * 60)
     
     app.run(
