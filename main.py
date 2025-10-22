@@ -85,6 +85,8 @@ def create_app():
     
     return app
 
+app = create_app()
+server = app.server
 
 def main():
     """
@@ -112,7 +114,6 @@ def main():
     
     # 创建应用
     print("\nStarting application...")
-    app = create_app()
     
     # 运行服务器
     print(f"\nApplication started successfully!")
@@ -125,7 +126,6 @@ def main():
         port=APP_PORT,
         debug=DEBUG_MODE
     )
-    server = app.server
 
 
 if __name__ == '__main__':
