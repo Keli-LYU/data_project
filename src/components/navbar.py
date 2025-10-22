@@ -18,7 +18,7 @@ def create_navbar():
             html.A(
                 dbc.Row([
                     dbc.Col(html.I(className="fas fa-chart-line me-2")),
-                    dbc.Col(dbc.NavbarBrand("中国股市数据分析平台", className="ms-2")),
+                    dbc.Col(dbc.NavbarBrand("China Stock Market Analysis", className="ms-2")),
                 ], align="center", className="g-0"),
                 href="/",
                 style={"textDecoration": "none"},
@@ -26,10 +26,10 @@ def create_navbar():
             dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
             dbc.Collapse(
                 dbc.Nav([
-                    dbc.NavItem(dbc.NavLink("首页", href="/", active="exact")),
-                    dbc.NavItem(dbc.NavLink("指数分析", href="/index-analysis", active="exact")),
-                    dbc.NavItem(dbc.NavLink("融资融券", href="/margin-analysis", active="exact")),
-                    dbc.NavItem(dbc.NavLink("相关性分析", href="/correlation", active="exact")),
+                    dbc.NavItem(dbc.NavLink("Home", href="/", active="exact")),
+                    dbc.NavItem(dbc.NavLink("Index Analysis", href="/index-analysis", active="exact")),
+                    dbc.NavItem(dbc.NavLink("Margin Trading", href="/margin-analysis", active="exact")),
+                    dbc.NavItem(dbc.NavLink("Correlation Analysis", href="/correlation", active="exact")),
                 ], className="ms-auto", navbar=True),
                 id="navbar-collapse",
                 navbar=True,

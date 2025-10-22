@@ -3,7 +3,7 @@
 """
 
 # 应用配置
-APP_TITLE = "中国股市数据分析平台"
+APP_TITLE = "China Stock Market Analysis Platform"
 APP_HOST = "127.0.0.1"
 APP_PORT = 8050
 DEBUG_MODE = True

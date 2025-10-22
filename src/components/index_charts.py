@@ -9,7 +9,7 @@ import pandas as pd
 from src.utils.clean_data import resample_to_weekly, resample_to_monthly
 
 
-def create_candlestick_chart(df, title="K线图", period="日线"):
+def create_candlestick_chart(df, title="Candlestick Chart", period="Daily"):
     """
     创建K线图
     
@@ -26,7 +26,7 @@ def create_candlestick_chart(df, title="K线图", period="日线"):
         rows=2, cols=1,
         shared_xaxes=True,
         vertical_spacing=0.03,
-        subplot_titles=(f'{title} - {period}', '成交量'),
+        subplot_titles=(f'{title} - {period}', 'Volume'),
         row_heights=[0.7, 0.3]
     )
     
@@ -38,7 +38,7 @@ def create_candlestick_chart(df, title="K线图", period="日线"):
             high=df['high'],
             low=df['low'],
             close=df['close'],
-            name='K线',
+            name='Candlestick',
             increasing_line_color='red',
             decreasing_line_color='green'
         ),
@@ -90,7 +90,7 @@ def create_candlestick_chart(df, title="K线图", period="日线"):
         go.Bar(
             x=df['date'],
             y=df['vol'],
-            name='成交量',
+            name='Volume',
             marker_color=colors,
             showlegend=False
         ),
@@ -100,21 +100,21 @@ def create_candlestick_chart(df, title="K线图", period="日线"):
     # 更新布局
     fig.update_layout(
         title=f'{title} - {period}',
-        xaxis_title='日期',
-        yaxis_title='价格',
+        xaxis_title='Date',
+        yaxis_title='Price',
         xaxis_rangeslider_visible=False,
         height=700,
         hovermode='x unified',
         template='plotly_white'
     )
     
-    fig.update_xaxes(title_text="日期", row=2, col=1)
-    fig.update_yaxes(title_text="成交量", row=2, col=1)
+    fig.update_xaxes(title_text="Date", row=2, col=1)
+    fig.update_yaxes(title_text="Volume", row=2, col=1)
     
     return fig
 
 
-def create_line_chart(df, title="趋势图"):
+def create_line_chart(df, title="Trend Chart"):
     """
     创建收盘价趋势线图
     
@@ -132,7 +132,7 @@ def create_line_chart(df, title="趋势图"):
             x=df['date'],
             y=df['close'],
             mode='lines',
-            name='收盘价',
+            name='Close Price',
             line=dict(color='blue', width=2),
             fill='tozeroy',
             fillcolor='rgba(0, 100, 200, 0.2)'
@@ -141,8 +141,8 @@ def create_line_chart(df, title="趋势图"):
     
     fig.update_layout(
         title=title,
-        xaxis_title='日期',
-        yaxis_title='收盘价',
+        xaxis_title='Date',
+        yaxis_title='Close Price',
         height=400,
         hovermode='x unified',
         template='plotly_white'
@@ -151,7 +151,7 @@ def create_line_chart(df, title="趋势图"):
     return fig
 
 
-def create_comparison_chart(df_sh, df_sz, title="沪深指数对比"):
+def create_comparison_chart(df_sh, df_sz, title="SH & SZ Index Comparison"):
     """
     创建沪深指数对比图
     
@@ -174,7 +174,7 @@ def create_comparison_chart(df_sh, df_sz, title="沪深指数对比"):
             x=df_sh['date'],
             y=sh_normalized,
             mode='lines',
-            name='上证指数',
+            name='Shanghai Comp.',
             line=dict(color='red', width=2)
         )
     )
@@ -184,15 +184,15 @@ def create_comparison_chart(df_sh, df_sz, title="沪深指数对比"):
             x=df_sz['date'],
             y=sz_normalized,
             mode='lines',
-            name='深证成指',
+            name='Shenzhen Comp.',
             line=dict(color='green', width=2)
         )
     )
     
     fig.update_layout(
         title=title,
-        xaxis_title='日期',
-        yaxis_title='标准化指数 (基期=100)',
+        xaxis_title='Date',
+        yaxis_title='Normalized Index (Base=100)',
         height=500,
         hovermode='x unified',
         template='plotly_white',

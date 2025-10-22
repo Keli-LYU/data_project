@@ -22,13 +22,13 @@ def create_margin_analysis_page():
         html.Div: 页面布局
     """
     layout = dbc.Container([
-        html.H2("融资融券分析", className="text-center mb-4"),
+        html.H2("Margin Trading Analysis", className="text-center mb-4"),
         html.Hr(),
         
         # 沪深两市融资融券余额趋势
         dbc.Row([
             dbc.Col([
-                html.H4("沪深两市融资融券余额趋势", className="text-center mb-3"),
+                html.H4("Margin Trading Balance Trend in SH & SZ Markets", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-margin-trend",
                     type="default",
@@ -42,7 +42,7 @@ def create_margin_analysis_page():
         # 余额变化率
         dbc.Row([
             dbc.Col([
-                html.H4("融资融券余额变化率", className="text-center mb-3"),
+                html.H4("Rate of Change of Margin Trading Balance", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-margin-change",
                     type="default",
@@ -58,12 +58,12 @@ def create_margin_analysis_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.Label("选择市场查看详细信息:"),
+                        html.Label("Select Market for Detailed Information:"),
                         dcc.Dropdown(
                             id='margin-market-selector',
                             options=[
-                                {'label': '沪市', 'value': 'sh'},
-                                {'label': '深市', 'value': 'sz'}
+                                {'label': 'Shanghai Market', 'value': 'sh'},
+                                {'label': 'Shenzhen Market', 'value': 'sz'}
                             ],
                             value='sh',
                             className='mb-3'
@@ -102,7 +102,7 @@ def create_margin_analysis_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("融资融券数据统计"),
+                        html.H5("Margin Trading Data Statistics"),
                         html.Div(id='margin-statistics')
                     ])
                 ])
@@ -145,10 +145,10 @@ def register_margin_callbacks(app):
         # 根据选择的市场创建详细图表
         if selected_market == 'sh':
             selected_data = sh_margin
-            market_name = '沪市'
+            market_name = 'Shanghai Market'
         else:
             selected_data = sz_margin
-            market_name = '深市'
+            market_name = 'Shenzhen Market'
         
         # 创建组成部分图表
         components_fig = create_margin_components_chart(selected_data, market_name)
@@ -163,14 +163,14 @@ def register_margin_callbacks(app):
         stats = html.Div([
             dbc.Row([
                 dbc.Col([
-                    html.P(f"市场: {market_name}"),
-                    html.P(f"数据点数: {len(selected_data)}"),
-                    html.P(f"数据时间范围: {selected_data['date'].min().strftime('%Y-%m-%d')} 至 {selected_data['date'].max().strftime('%Y-%m-%d')}"),
+                    html.P(f"Market: {market_name}"),
+                    html.P(f"Data Points: {len(selected_data)}"),
+                    html.P(f"Date Range: {selected_data['date'].min().strftime('%Y-%m-%d')} to {selected_data['date'].max().strftime('%Y-%m-%d')}"),
                 ], width=6),
                 dbc.Col([
-                    html.P(f"最新融资融券余额: {latest['margin_balance']/100000000:.2f} 亿元"),
-                    html.P(f"最新融资余额: {latest['financing_balance']/100000000:.2f} 亿元"),
-                    html.P(f"期间增长: {((latest['margin_balance'] / earliest['margin_balance'] - 1) * 100):.2f}%"),
+                    html.P(f"Latest Margin Balance: {latest['margin_balance']/100000000:.2f} billion yuan"),
+                    html.P(f"Latest Financing Balance: {latest['financing_balance']/100000000:.2f} billion yuan"),
+                    html.P(f"Period Growth: {((latest['margin_balance'] / earliest['margin_balance'] - 1) * 100):.2f}%"),
                 ], width=6),
             ])
         ])

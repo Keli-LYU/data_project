@@ -1,132 +1,130 @@
-# 中国股市数据分析平台
+# China Stock Market Analysis Platform
 
-基于 Dash 框架的交互式股市数据分析和可视化平台，提供沪深两市指数分析、融资融券数据分析以及相关性分析功能。
+An interactive stock market analysis and visualization platform based on the Dash framework, providing analysis of Shanghai and Shenzhen stock market indices, margin trading data, and correlation analysis.
 
 ## User Guide
 
-### 安装依赖
+### Install Dependencies
 
-本项目需要 Python 3.8 或更高版本。首先安装所需的 Python 包：
+This project requires Python 3.8 or higher. First, install the required Python packages:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-### 运行应用
+### Run the Application
 
-在项目根目录下运行以下命令启动 Dashboard：
+Run the following command in the project root directory to start the Dashboard:
 
 ```bash
 python main.py
 ```
 
-应用启动后，在浏览器中访问 `http://127.0.0.1:8050` 即可使用。
+After the application starts, visit `http://127.0.0.1:8050` in your browser to use it.
 
-### 使用说明
+### Usage Instructions
 
-Dashboard 包含以下四个主要页面：
+The Dashboard includes the following four main pages:
 
-1. **首页**: 展示项目简介和功能模块导航
-2. **指数分析**: 提供上证指数和深证成指的日线、周线、月线 K 线图及趋势分析
-3. **融资融券分析**: 展示沪深两市融资融券余额趋势、变化率及详细组成分析
-4. **相关性分析**: 分析上证指数与深证成指之间的价格相关性、收益率相关性和动态相关性
+1.  **Home**: Displays the project introduction and navigation to functional modules.
+2.  **Index Analysis**: Provides daily, weekly, and monthly K-line charts and trend analysis for the Shanghai Composite Index and Shenzhen Component Index.
+3.  **Margin Trading Analysis**: Shows the trend of margin trading balance, rate of change, and detailed composition analysis for both Shanghai and Shenzhen markets.
+4.  **Correlation Analysis**: Analyzes the price correlation, return correlation, and dynamic correlation between the Shanghai and Shenzhen indices.
 
 ## Data
 
-### 数据来源
+### Data Source
 
-本项目使用的数据包括：
+The data used in this project includes:
 
-- `sh_index.csv`: 上证指数历史数据（1990-至今）
-- `sz_index.csv`: 深证成指历史数据（1991-至今）
-- `sh_margin_trade.csv`: 沪市融资融券数据（2010-至今）
-- `sz_margin_trade.csv`: 深市融资融券数据（2010-至今）
+- `sh_index.csv`: Historical data of the Shanghai Composite Index (1990-2022)
+- `sz_index.csv`: Historical data of the Shenzhen Component Index (1991-2022)
+- `sh_margin_trade.csv`: Margin trading data for the Shanghai market (2010-2022)
+- `sz_margin_trade.csv`: Margin trading data for the Shenzhen market (2010-2022)
 
-**数据来源**: 阿里云天池公开数据集  
-**数据集链接**: https://tianchi.aliyun.com/  
-**用途**: 本数据集仅用于教学和学术研究目的
+**Data Source**: Alibaba Cloud Tianchi Open Datasets  
+**Dataset Link**: https://tianchi.aliyun.com/  
+**Purpose**: This dataset is for educational and academic research purposes only.
 
-> 📄 详细的数据来源说明请参见 [DATA_SOURCE.md](DATA_SOURCE.md)
+### Data Field Description
 
-### 数据字段说明
+**Index Data Fields**:
+- `date`: Trading date (format: YYYYMMDD)
+- `open`: Opening price
+- `high`: Highest price
+- `low`: Lowest price
+- `close`: Closing price
+- `vol`: Trading volume
+- `amount`: Trading amount
 
-**指数数据字段**:
-- `date`: 交易日期（格式：YYYYMMDD）
-- `open`: 开盘价
-- `high`: 最高价
-- `low`: 最低价
-- `close`: 收盘价
-- `vol`: 成交量
-- `amount`: 成交额
+**Margin Trading Data Fields**:
+- `date`: Trading date (format: YYYYMMDD)
+- `financing_balance`: Financing balance
+- `financing_purchase`: Financing purchase amount
+- `financing_redeem`: Financing redemption amount
+- `securities_lending_balance`: Securities lending balance
+- `securities_lending_sell`: Securities lending sell volume
+- `margin_balance`: Margin trading balance (financing balance + securities lending balance)
 
-**融资融券数据字段**:
-- `date`: 交易日期（格式：YYYYMMDD）
-- `financing_balance`: 融资余额
-- `financing_purchase`: 融资买入额
-- `financing_redeem`: 融资偿还额
-- `securities_lending_balance`: 融券余额
-- `securities_lending_sell`: 融券卖出量
-- `margin_balance`: 融资融券余额（融资余额+融券余额）
+### Data Processing
 
-### 数据处理
+Raw data is stored in the `data/raw/` directory, and the cleaned data is stored in the `data/cleaned/` directory. Data processing includes:
 
-原始数据存储在 `data/raw/` 目录，经过清洗处理后的数据存储在 `data/cleaned/` 目录。数据处理包括：
-
-- 日期格式转换
-- 数据排序和索引重置
-- 缺失值处理
-- 计算衍生指标（涨跌幅、移动平均线等）
-- 时间序列重采样（日线→周线/月线）
+- Date format conversion
+- Data sorting and index resetting
+- Handling missing values
+- Calculating derived indicators (e.g., percentage change, moving averages)
+- Time series resampling (daily → weekly/monthly)
 
 ## Developer Guide
 
-### 项目结构
+### Project Structure
 
 ```
 data_project/
-├── config.py                      # 配置文件
-├── main.py                        # 主程序入口
-├── requirements.txt               # 依赖包列表
-├── README.md                      # 项目文档
-├── data/                          # 数据目录
-│   ├── raw/                       # 原始数据
+├── config.py                      # Configuration file
+├── main.py                        # Main application entry point
+├── requirements.txt               # List of required packages
+├── README.md                      # Project documentation
+├── data/                          # Data directory
+│   ├── raw/                       # Raw data
 │   │   ├── sh_index.csv
 │   │   ├── sz_index.csv
 │   │   ├── sh_margin_trade.csv
 │   │   └── sz_margin_trade.csv
-│   └── cleaned/                   # 清洗后的数据
+│   └── cleaned/                   # Cleaned data
 │       ├── sh_index_clean.csv
 │       ├── sz_index_clean.csv
 │       ├── sh_margin_clean.csv
 │       └── sz_margin_clean.csv
-└── src/                           # 源代码
+└── src/                           # Source code
     ├── __init__.py
-    ├── components/                # UI 组件
+    ├── components/                # UI components
     │   ├── __init__.py
-    │   ├── navbar.py              # 导航栏组件
-    │   ├── index_charts.py        # 指数图表组件
-    │   ├── margin_charts.py       # 融资融券图表组件
-    │   └── correlation_charts.py  # 相关性图表组件
-    ├── pages/                     # 页面
+    │   ├── navbar.py              # Navbar component
+    │   ├── index_charts.py        # Index chart components
+    │   ├── margin_charts.py       # Margin trading chart components
+    │   └── correlation_charts.py  # Correlation chart components
+    ├── pages/                     # Pages
     │   ├── __init__.py
-    │   ├── home.py                # 首页
-    │   ├── index_analysis.py      # 指数分析页面
-    │   ├── margin_analysis.py     # 融资融券分析页面
-    │   └── correlation.py         # 相关性分析页面
-    └── utils/                     # 工具函数
+    │   ├── home.py                # Home page
+    │   ├── index_analysis.py      # Index analysis page
+    │   ├── margin_analysis.py     # Margin trading analysis page
+    │   └── correlation.py         # Correlation analysis page
+    └── utils/                     # Utility functions
         ├── __init__.py
-        ├── get_data.py            # 数据加载模块
-        └── clean_data.py          # 数据清洗模块
+        ├── get_data.py            # Data loading module
+        └── clean_data.py          # Data cleaning module
 ```
 
-### 架构说明
+### Architecture Description
 
-项目采用模块化设计，分为以下几个层次：
+The project uses a modular design, divided into the following layers:
 
-1. **数据层** (`src/utils/`): 负责数据的加载、清洗和处理
-2. **组件层** (`src/components/`): 可复用的图表组件
-3. **页面层** (`src/pages/`): 各个功能页面及其回调逻辑
-4. **应用层** (`main.py`): 应用初始化和路由管理
+1.  **Data Layer** (`src/utils/`): Responsible for loading, cleaning, and processing data.
+2.  **Component Layer** (`src/components/`): Reusable chart components.
+3.  **Page Layer** (`src/pages/`): Individual functional pages and their callback logic.
+4.  **Application Layer** (`main.py`): Application initialization and routing management.
 
 ```mermaid
 graph TD
@@ -139,97 +137,95 @@ graph TD
     E --> G[data/cleaned]
 ```
 
-### 添加新页面
+### Adding a New Page
 
-1. 在 `src/pages/` 目录下创建新的页面文件，例如 `new_page.py`
-2. 实现 `create_new_page()` 函数返回页面布局
-3. 实现 `register_new_page_callbacks(app)` 函数注册回调
-4. 在 `main.py` 中导入并注册新页面：
-   ```python
-   from src.pages.new_page import create_new_page, register_new_page_callbacks
+1.  Create a new page file in the `src/pages/` directory, e.g., `new_page.py`.
+2.  Implement a `create_new_page()` function that returns the page layout.
+3.  Implement a `register_new_page_callbacks(app)` function to register callbacks.
+4.  Import and register the new page in `main.py`:
+    ```python
+    from src.pages.new_page import create_new_page, register_new_page_callbacks
    
-   # 在 display_page 函数中添加路由
-   elif pathname == '/new-page':
-       return create_new_page()
+    # Add a route in the display_page function
+    elif pathname == '/new-page':
+        return create_new_page()
    
-   # 在 create_app 函数中注册回调
-   register_new_page_callbacks(app)
-   ```
-5. 在 `src/components/navbar.py` 中添加导航链接
+    # Register callbacks in the create_app function
+    register_new_page_callbacks(app)
+    ```
+5.  Add a navigation link in `src/components/navbar.py`.
 
-### 添加新图表
+### Adding a New Chart
 
-1. 在 `src/components/` 目录下相应的文件中添加新的图表函数
-2. 图表函数应返回 `plotly.graph_objects.Figure` 对象
-3. 在页面文件中导入并使用新图表函数
-4. 通过回调函数实现交互功能
+1.  Add a new chart function in the corresponding file in the `src/components/` directory.
+2.  The chart function should return a `plotly.graph_objects.Figure` object.
+3.  Import and use the new chart function in the page file.
+4.  Implement interactive features through callback functions.
 
-### 代码规范
+## Analysis Report
 
-- 所有函数都应包含 docstring 说明
-- 使用类型提示（typing）增强代码可读性
-- 遵循 PEP 8 编码规范
-- 组件函数命名以 `create_` 开头
-- 回调函数命名以 `update_` 或 `register_` 开头
+### Key Findings
 
-## Rapport d'analyse
+1.  **Correlation Analysis of Shanghai and Shenzhen Indices**
+    - The Shanghai and Shenzhen indices show a strong positive correlation (correlation coefficient > 0.9).
+    - The two indices are highly consistent in long-term trends, reflecting the overall characteristics of the Chinese stock market.
+    - During certain periods (such as the 2015 stock market crash), the correlation shows short-term fluctuations.
 
-### 主要发现
+2.  **Margin Trading Trends**
+    - The margin trading balance shows an overall upward trend, reflecting an increase in market leverage.
+    - The financing balance is much higher than the securities lending balance, indicating that market participants are more inclined to be bullish.
+    - The rate of change in the balance is closely related to market sentiment, with balance growth accelerating during market uptrends.
 
-1. **沪深指数相关性分析**
-   - 上证指数与深证成指呈现强正相关关系（相关系数 > 0.9）
-   - 两个指数在长期趋势上高度一致，反映了中国股市的整体性特征
-   - 在某些时间段（如2015年股灾期间），相关性会出现短期波动
+3.  **Market Characteristics**
+    - Daily data shows high market volatility, making short-term trends difficult to predict.
+    - Weekly and monthly data better reflect medium and long-term trends.
+    - Moving averages can effectively smooth out short-term fluctuations and assist in trend judgment.
 
-2. **融资融券趋势**
-   - 融资融券余额整体呈上升趋势，反映了市场杠杆的增加
-   - 融资余额远高于融券余额，表明市场参与者更倾向于做多
-   - 余额变化率与市场情绪密切相关，在市场上涨期间余额增长加速
+### Visualization Highlights
 
-3. **市场特征**
-   - 日线数据显示市场波动性较大，短期趋势难以预测
-   - 周线和月线数据更能反映中长期趋势
-   - 移动平均线能够有效地平滑短期波动，辅助趋势判断
-
-### 可视化亮点
-
-- **K线图**: 直观展示价格波动和交易量
-- **热力图**: 清晰呈现融资融券的月度模式
-- **滚动相关性**: 动态展示两市场相关性的时间变化
-- **双轴对比图**: 方便比较不同量级的指标
+- **K-line Chart**: Intuitively displays price fluctuations and trading volume.
+- **Heatmap**: Clearly presents the monthly patterns of margin trading.
+- **Rolling Correlation**: Dynamically shows the time-varying correlation between the two markets.
+- **Dual-axis Chart**: Convenient for comparing indicators of different magnitudes.
 
 ## Copyright
 
-### 原创性声明
+### Originality Statement
 
-本项目代码完全由项目开发者原创完成，包括：
-- 项目架构设计
-- 数据处理逻辑
-- 可视化组件实现
-- 页面布局和交互设计
+The code in this project was originally developed by the project developer, including:
+- Project architecture design
+- Data processing logic
+- Visualization component implementation
+- Page layout and interaction design
 
-### 参考资料
+### References
 
-本项目在开发过程中参考了以下官方文档和资源：
+During the development of this project, the following official documents and resources were consulted:
 
-1. **Dash 官方文档** (https://dash.plotly.com/)
-   - 用途：学习 Dash 框架的基本使用方法和组件 API
-   - 涉及文件：`main.py`, `src/pages/*.py`
+1.  **Dash Official Documentation** (https://dash.plotly.com/)
+    - Purpose: To learn the basic usage of the Dash framework and its component APIs.
+    - Files involved: `main.py`, `src/pages/*.py`
 
-2. **Plotly Python 文档** (https://plotly.com/python/)
-   - 用途：学习 Plotly 图表的创建和配置方法
-   - 涉及文件：`src/components/*_charts.py`
+2.  **Plotly Python Documentation** (https://plotly.com/python/)
+    - Purpose: To learn how to create and configure Plotly charts.
+    - Files involved: `src/components/*_charts.py`
 
-3. **Pandas 官方文档** (https://pandas.pydata.org/docs/)
-   - 用途：数据处理和时间序列操作
-   - 涉及文件：`src/utils/clean_data.py`
+3.  **Pandas Official Documentation** (https://pandas.pydata.org/docs/)
+    - Purpose: For data processing and time series operations.
+    - Files involved: `src/utils/clean_data.py`
 
-4. **Dash Bootstrap Components 文档** (https://dash-bootstrap-components.opensource.faculty.ai/)
-   - 用途：使用 Bootstrap 风格的 UI 组件
-   - 涉及文件：`src/components/navbar.py`, `src/pages/*.py`
+4.  **Dash Bootstrap Components Documentation** (https://dash-bootstrap-components.opensource.faculty.ai/)
+    - Purpose: To use Bootstrap-style UI components.
+    - Files involved: `src/components/navbar.py`, `src/pages/*.py`
 
-所有代码均为根据以上文档学习后独立编写，未直接复制任何代码片段。
+All code was written independently after studying the above documents, and no code snippets were directly copied.
 
-### 数据声明
+### Data Declaration
 
-本项目使用的数据来源于阿里云天池公开数据集平台（https://tianchi.aliyun.com/），所有数据均为公开数据集，仅用于教学和学术研究目的。数据的使用遵循阿里云天池平台的数据使用协议。
+The data used in this project is from the Alibaba Cloud Tianchi open dataset platform (https://tianchi.aliyun.com/), and all data is from public datasets, intended for educational and academic research purposes only. The use of the data complies with the data usage agreement of the Tianchi platform.
+
+---
+
+**Project Development**: ESIEE Paris - Python 2 Data Project  
+**Development Time**: 2025  
+**Technology Stack**: Python, Dash, Plotly, Pandas, Bootstrap

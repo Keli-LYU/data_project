@@ -23,15 +23,15 @@ def create_correlation_page():
         html.Div: 页面布局
     """
     layout = dbc.Container([
-        html.H2("相关性分析", className="text-center mb-4"),
+        html.H2("Correlation Analysis", className="text-center mb-4"),
         html.Hr(),
         
         # 说明文字
         dbc.Row([
             dbc.Col([
                 dbc.Alert([
-                    html.H5("分析说明", className="alert-heading"),
-                    html.P("本页面分析上证指数与深证成指之间的相关性，包括价格相关性、收益率相关性以及时间序列上的动态相关性。"),
+                    html.H5("Analysis Description", className="alert-heading"),
+                    html.P("This page analyzes the correlation between the Shanghai Composite Index and the Shenzhen Component Index, including price correlation, return correlation, and dynamic correlation over time."),
                 ], color="info")
             ], width=12)
         ], className="mb-4"),
@@ -39,7 +39,7 @@ def create_correlation_page():
         # 相关性矩阵
         dbc.Row([
             dbc.Col([
-                html.H4("指数相关性矩阵", className="text-center mb-3"),
+                html.H4("Index Correlation Matrix", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-corr-matrix",
                     type="default",
@@ -53,7 +53,7 @@ def create_correlation_page():
         # 散点图与双轴对比
         dbc.Row([
             dbc.Col([
-                html.H4("价格散点图与趋势线", className="text-center mb-3"),
+                html.H4("Price Scatter Plot with Trend Line", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-scatter",
                     type="default",
@@ -64,7 +64,7 @@ def create_correlation_page():
             ], width=12, lg=6),
             
             dbc.Col([
-                html.H4("双轴价格走势对比", className="text-center mb-3"),
+                html.H4("Dual-Axis Price Trend Comparison", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-dual-axis",
                     type="default",
@@ -80,14 +80,14 @@ def create_correlation_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.Label("滚动相关性窗口大小（交易日）:"),
+                        html.Label("Rolling Correlation Window Size (Trading Days):"),
                         dcc.Slider(
                             id='rolling-window-slider',
                             min=20,
                             max=250,
                             step=10,
                             value=60,
-                            marks={20: '20天', 60: '60天', 120: '120天', 250: '250天'},
+                            marks={20: '20 days', 60: '60 days', 120: '120 days', 250: '250 days'},
                             tooltip={"placement": "bottom", "always_visible": True}
                         ),
                     ])
@@ -98,7 +98,7 @@ def create_correlation_page():
         # 滚动相关性图
         dbc.Row([
             dbc.Col([
-                html.H4("滚动相关系数", className="text-center mb-3"),
+                html.H4("Rolling Correlation Coefficient", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-rolling-corr",
                     type="default",
@@ -112,7 +112,7 @@ def create_correlation_page():
         # 收益率对比
         dbc.Row([
             dbc.Col([
-                html.H4("日收益率对比", className="text-center mb-3"),
+                html.H4("Daily Return Comparison", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-return-comp",
                     type="default",
@@ -128,7 +128,7 @@ def create_correlation_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("相关性统计"),
+                        html.H5("Correlation Statistics"),
                         html.Div(id='correlation-statistics')
                     ])
                 ])
@@ -165,26 +165,26 @@ def register_correlation_callbacks(app):
         
         # 创建相关性矩阵
         data_dict = {
-            '上证指数': sh_index,
-            '深证成指': sz_index
+            'Shanghai Comp.': sh_index,
+            'Shenzhen Comp.': sz_index
         }
         matrix_fig = create_correlation_matrix(data_dict)
         
         # 创建散点图
-        scatter_fig = create_correlation_scatter(sh_index, sz_index, '上证指数', '深证成指')
+        scatter_fig = create_correlation_scatter(sh_index, sz_index, 'Shanghai Comp.', 'Shenzhen Comp.')
         
         # 创建双轴图
-        dual_axis_fig = create_dual_axis_chart(sh_index, sz_index, '上证指数', '深证成指')
+        dual_axis_fig = create_dual_axis_chart(sh_index, sz_index, 'Shanghai Comp.', 'Shenzhen Comp.')
         
         # 创建滚动相关性图
         rolling_corr_fig = create_rolling_correlation(
-            sh_index, sz_index, window_size, '上证指数', '深证成指'
+            sh_index, sz_index, window_size, 'Shanghai Comp.', 'Shenzhen Comp.'
         )
         
         # 创建收益率对比图（只显示最近1年的数据以提高可读性）
         recent_sh = sh_index.tail(250)
         recent_sz = sz_index.tail(250)
-        return_comp_fig = create_return_comparison(recent_sh, recent_sz, '上证指数', '深证成指')
+        return_comp_fig = create_return_comparison(recent_sh, recent_sz, 'Shanghai Comp.', 'Shenzhen Comp.')
         
         # 计算统计信息
         # 合并数据以计算相关系数
@@ -212,16 +212,16 @@ def register_correlation_callbacks(app):
         stats = html.Div([
             dbc.Row([
                 dbc.Col([
-                    html.P(f"数据点数: {len(merged)}"),
-                    html.P(f"时间范围: {merged['date'].min().strftime('%Y-%m-%d')} 至 {merged['date'].max().strftime('%Y-%m-%d')}"),
+                    html.P(f"Data Points: {len(merged)}"),
+                    html.P(f"Date Range: {merged['date'].min().strftime('%Y-%m-%d')} to {merged['date'].max().strftime('%Y-%m-%d')}"),
                 ], width=6),
                 dbc.Col([
-                    html.P(f"价格相关系数: {price_corr:.4f}"),
-                    html.P(f"收益率相关系数: {return_corr:.4f}"),
+                    html.P(f"Price Correlation Coefficient: {price_corr:.4f}"),
+                    html.P(f"Return Correlation Coefficient: {return_corr:.4f}"),
                     html.P([
-                        "相关性解读: ",
+                        "Correlation Interpretation: ",
                         html.Span(
-                            "强正相关" if price_corr > 0.7 else "正相关" if price_corr > 0.3 else "弱相关",
+                            "Strong Positive Correlation" if price_corr > 0.7 else "Positive Correlation" if price_corr > 0.3 else "Weak Correlation",
                             style={'color': 'green' if price_corr > 0.5 else 'orange'}
                         )
                     ]),

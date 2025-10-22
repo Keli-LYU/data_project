@@ -21,7 +21,7 @@ def create_index_analysis_page():
         html.Div: 页面布局
     """
     layout = dbc.Container([
-        html.H2("指数分析", className="text-center mb-4"),
+        html.H2("Index Analysis", className="text-center mb-4"),
         html.Hr(),
         
         # 控制面板
@@ -29,36 +29,36 @@ def create_index_analysis_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("选择分析参数"),
+                        html.H5("Select Analysis Parameters"),
                         
                         # 市场选择
-                        html.Label("选择市场:"),
+                        html.Label("Select Market:"),
                         dcc.Dropdown(
                             id='market-selector',
                             options=[
-                                {'label': '上证指数', 'value': 'sh'},
-                                {'label': '深证成指', 'value': 'sz'},
-                                {'label': '沪深对比', 'value': 'both'}
+                                {'label': 'Shanghai Composite Index', 'value': 'sh'},
+                                {'label': 'Shenzhen Component Index', 'value': 'sz'},
+                                {'label': 'SH & SZ Comparison', 'value': 'both'}
                             ],
                             value='sh',
                             className='mb-3'
                         ),
                         
                         # 周期选择
-                        html.Label("选择时间周期:"),
+                        html.Label("Select Time Period:"),
                         dcc.Dropdown(
                             id='period-selector',
                             options=[
-                                {'label': '日线', 'value': 'daily'},
-                                {'label': '周线', 'value': 'weekly'},
-                                {'label': '月线', 'value': 'monthly'}
+                                {'label': 'Daily', 'value': 'daily'},
+                                {'label': 'Weekly', 'value': 'weekly'},
+                                {'label': 'Monthly', 'value': 'monthly'}
                             ],
                             value='daily',
                             className='mb-3'
                         ),
                         
                         # 日期范围选择
-                        html.Label("选择日期范围:"),
+                        html.Label("Select Date Range:"),
                         dcc.DatePickerRange(
                             id='date-range',
                             display_format='YYYY-MM-DD',
@@ -83,7 +83,7 @@ def create_index_analysis_page():
         # 对比图表
         dbc.Row([
             dbc.Col([
-                html.H4("沪深指数对比", className="text-center mb-3"),
+                html.H4("SH & SZ Index Comparison", className="text-center mb-3"),
                 dcc.Loading(
                     id="loading-comparison",
                     type="default",
@@ -99,7 +99,7 @@ def create_index_analysis_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H5("统计信息"),
+                        html.H5("Statistics"),
                         html.Div(id='index-statistics')
                     ])
                 ])
@@ -160,20 +160,20 @@ def register_index_callbacks(app):
         sz_filtered = sz_data[(sz_data['date'] >= start_date) & (sz_data['date'] <= end_date)]
         
         # 创建主图表
-        period_name = {'daily': '日线', 'weekly': '周线', 'monthly': '月线'}[period]
+        period_name = {'daily': 'Daily', 'weekly': 'Weekly', 'monthly': 'Monthly'}[period]
         
         if market == 'sh':
-            main_fig = create_candlestick_chart(sh_filtered, "上证指数", period_name)
+            main_fig = create_candlestick_chart(sh_filtered, "Shanghai Composite Index", period_name)
             selected_data = sh_filtered
-            market_name = "上证指数"
+            market_name = "Shanghai Composite Index"
         elif market == 'sz':
-            main_fig = create_candlestick_chart(sz_filtered, "深证成指", period_name)
+            main_fig = create_candlestick_chart(sz_filtered, "Shenzhen Component Index", period_name)
             selected_data = sz_filtered
-            market_name = "深证成指"
+            market_name = "Shenzhen Component Index"
         else:  # both
-            main_fig = create_line_chart(sh_filtered, f"上证指数 - {period_name}")
+            main_fig = create_line_chart(sh_filtered, f"Shanghai Composite Index - {period_name}")
             selected_data = sh_filtered
-            market_name = "沪深指数"
+            market_name = "SH & SZ Indices"
         
         # 创建对比图表
         comparison_fig = create_comparison_chart(sh_filtered, sz_filtered)
@@ -183,16 +183,16 @@ def register_index_callbacks(app):
             stats = html.Div([
                 dbc.Row([
                     dbc.Col([
-                        html.P(f"市场: {market_name}"),
-                        html.P(f"数据点数: {len(selected_data)}"),
+                        html.P(f"Market: {market_name}"),
+                        html.P(f"Data Points: {len(selected_data)}"),
                     ], width=6),
                     dbc.Col([
-                        html.P(f"最新收盘: {selected_data['close'].iloc[-1]:.2f}"),
-                        html.P(f"期间涨跌幅: {((selected_data['close'].iloc[-1] / selected_data['close'].iloc[0] - 1) * 100):.2f}%"),
+                        html.P(f"Latest Close: {selected_data['close'].iloc[-1]:.2f}"),
+                        html.P(f"Period Change: {((selected_data['close'].iloc[-1] / selected_data['close'].iloc[0] - 1) * 100):.2f}%"),
                     ], width=6),
                 ])
             ])
         else:
-            stats = html.P("无数据")
+            stats = html.P("No data available")
         
         return main_fig, comparison_fig, stats, start_date, end_date, min_date, max_date

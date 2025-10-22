@@ -17,7 +17,7 @@ def create_home_page():
         # 标题部分
         dbc.Row([
             dbc.Col([
-                html.H1("中国股市数据分析平台", className="text-center mb-4"),
+                html.H1("China Stock Market Analysis Platform", className="text-center mb-4"),
                 html.Hr(),
             ], width=12)
         ]),
@@ -27,10 +27,10 @@ def create_home_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H3("项目简介", className="card-title"),
+                        html.H3("Project Introduction", className="card-title"),
                         html.P([
-                            "本平台对中国股市的主要指数（上证指数、深证成指）以及融资融券数据进行全面分析和可视化展示。",
-                            "通过多维度的数据分析，帮助用户更好地理解市场趋势和相关性。"
+                            "This platform provides a comprehensive analysis and visualization of major indices (Shanghai Composite, Shenzhen Component) and margin trading data of the Chinese stock market.",
+                            "Through multi-dimensional data analysis, it helps users better understand market trends and correlations."
                         ], className="card-text"),
                     ])
                 ], className="mb-4")
@@ -46,17 +46,17 @@ def create_home_page():
                                style={"height": "200px", "object-fit": "cover"},
                                className="d-none"),  # 如果没有图片就隐藏
                     dbc.CardBody([
-                        html.H4("📈 指数分析", className="card-title text-center"),
+                        html.H4("📈 Index Analysis", className="card-title text-center"),
                         html.P([
-                            "• 上证指数与深证成指的日线、周线、月线分析",
+                            "• Daily, weekly, and monthly analysis of Shanghai and Shenzhen indices",
                             html.Br(),
-                            "• K线图展示市场波动",
+                            "• Candlestick charts to show market volatility",
                             html.Br(),
-                            "• 移动平均线趋势分析",
+                            "• Moving average trend analysis",
                             html.Br(),
-                            "• 沪深指数对比"
+                            "• Comparison of Shanghai and Shenzhen indices"
                         ], className="card-text"),
-                        dbc.Button("进入分析", 
+                        dbc.Button("Go to Analysis", 
                                   href="/index-analysis", 
                                   color="primary", 
                                   className="w-100 mt-2")
@@ -68,17 +68,17 @@ def create_home_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H4("💰 融资融券分析", className="card-title text-center"),
+                        html.H4("💰 Margin Trading Analysis", className="card-title text-center"),
                         html.P([
-                            "• 沪深两市融资融券余额趋势",
+                            "• Trend of margin trading balance in Shanghai and Shenzhen markets",
                             html.Br(),
-                            "• 融资买入与偿还分析",
+                            "• Analysis of financing purchases and repayments",
                             html.Br(),
-                            "• 余额变化率监控",
+                            "• Monitoring of balance change rate",
                             html.Br(),
-                            "• 月度数据热力图"
+                            "• Monthly data heatmap"
                         ], className="card-text"),
-                        dbc.Button("进入分析", 
+                        dbc.Button("Go to Analysis", 
                                   href="/margin-analysis", 
                                   color="success", 
                                   className="w-100 mt-2")
@@ -90,17 +90,17 @@ def create_home_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H4("🔗 相关性分析", className="card-title text-center"),
+                        html.H4("🔗 Correlation Analysis", className="card-title text-center"),
                         html.P([
-                            "• 沪深指数相关性分析",
+                            "• Correlation analysis of Shanghai and Shenzhen indices",
                             html.Br(),
-                            "• 滚动相关系数计算",
+                            "• Rolling correlation coefficient calculation",
                             html.Br(),
-                            "• 收益率对比分析",
+                            "• Comparative analysis of returns",
                             html.Br(),
-                            "• 散点图与趋势线"
+                            "• Scatter plot with trend line"
                         ], className="card-text"),
-                        dbc.Button("进入分析", 
+                        dbc.Button("Go to Analysis", 
                                   href="/correlation", 
                                   color="info", 
                                   className="w-100 mt-2")
@@ -114,16 +114,16 @@ def create_home_page():
             dbc.Col([
                 dbc.Card([
                     dbc.CardBody([
-                        html.H3("数据说明", className="card-title"),
+                        html.H3("Data Description", className="card-title"),
                         html.Ul([
-                            html.Li("sh_index.csv - 沪市指数（上证指数）历史数据"),
-                            html.Li("sz_index.csv - 深证成指历史数据"),
-                            html.Li("sh_margin_trade.csv - 沪市融资融券数据"),
-                            html.Li("sz_margin_trade.csv - 深市融资融券数据"),
+                            html.Li("sh_index.csv - Historical data of Shanghai Composite Index"),
+                            html.Li("sz_index.csv - Historical data of Shenzhen Component Index"),
+                            html.Li("sh_margin_trade.csv - Margin trading data for Shanghai market"),
+                            html.Li("sz_margin_trade.csv - Margin trading data for Shenzhen market"),
                         ]),
                         html.P([
-                            "数据来源：",
-                            html.A("阿里云天池公开数据集", 
+                            "Data Source: ",
+                            html.A("Alibaba Cloud Tianchi Open Datasets", 
                                   href="https://tianchi.aliyun.com/", 
                                   target="_blank",
                                   style={"color": "#1890ff"})

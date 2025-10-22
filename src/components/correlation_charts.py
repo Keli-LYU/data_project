@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 
 
-def create_correlation_scatter(df1, df2, name1='指数1', name2='指数2'):
+def create_correlation_scatter(df1, df2, name1='Index 1', name2='Index 2'):
     """
     创建两个指数的散点图和相关性分析
     
@@ -41,16 +41,16 @@ def create_correlation_scatter(df1, df2, name1='指数1', name2='指数2'):
             x=merged['close_1'],
             y=merged['close_2'],
             mode='markers',
-            name='数据点',
+            name='Data Points',
             marker=dict(
                 size=5,
                 color=merged.index,
                 colorscale='Viridis',
                 showscale=True,
-                colorbar=dict(title="时间顺序")
+                colorbar=dict(title="Time Sequence")
             ),
             text=merged['date'].dt.strftime('%Y-%m-%d'),
-            hovertemplate='<b>日期:</b> %{text}<br>' +
+            hovertemplate='<b>Date:</b> %{text}<br>' +
                          f'<b>{name1}:</b> %{{x:.2f}}<br>' +
                          f'<b>{name2}:</b> %{{y:.2f}}<extra></extra>'
         )
@@ -66,13 +66,13 @@ def create_correlation_scatter(df1, df2, name1='指数1', name2='指数2'):
             x=x_trend,
             y=p(x_trend),
             mode='lines',
-            name='趋势线',
+            name='Trend Line',
             line=dict(color='red', width=2, dash='dash')
         )
     )
     
     fig.update_layout(
-        title=f'{name1} vs {name2}<br>相关系数: {correlation:.4f}',
+        title=f'{name1} vs {name2}<br>Correlation: {correlation:.4f}',
         xaxis_title=name1,
         yaxis_title=name2,
         height=600,
@@ -83,7 +83,7 @@ def create_correlation_scatter(df1, df2, name1='指数1', name2='指数2'):
     return fig
 
 
-def create_rolling_correlation(df1, df2, window=60, name1='指数1', name2='指数2'):
+def create_rolling_correlation(df1, df2, window=60, name1='Index 1', name2='Index 2'):
     """
     创建滚动相关性图表
     
@@ -115,7 +115,7 @@ def create_rolling_correlation(df1, df2, window=60, name1='指数1', name2='指�
             x=merged['date'],
             y=merged['rolling_corr'],
             mode='lines',
-            name=f'{window}日滚动相关系数',
+            name=f'{window}-Day Rolling Correlation',
             line=dict(color='blue', width=2),
             fill='tozeroy',
             fillcolor='rgba(0, 100, 200, 0.2)'
@@ -128,9 +128,9 @@ def create_rolling_correlation(df1, df2, window=60, name1='指数1', name2='指�
     fig.add_hline(y=-0.5, line_dash="dot", line_color="red", opacity=0.3)
     
     fig.update_layout(
-        title=f'{name1} 与 {name2} 的{window}日滚动相关性',
-        xaxis_title='日期',
-        yaxis_title='相关系数',
+        title=f'{window}-Day Rolling Correlation between {name1} and {name2}',
+        xaxis_title='Date',
+        yaxis_title='Correlation Coefficient',
         height=400,
         template='plotly_white',
         hovermode='x unified'
@@ -139,7 +139,7 @@ def create_rolling_correlation(df1, df2, window=60, name1='指数1', name2='指�
     return fig
 
 
-def create_dual_axis_chart(df1, df2, name1='指数1', name2='指数2'):
+def create_dual_axis_chart(df1, df2, name1='Index 1', name2='Index 2'):
     """
     创建双Y轴对比图
     
@@ -185,12 +185,12 @@ def create_dual_axis_chart(df1, df2, name1='指数1', name2='指数2'):
     )
     
     # 设置坐标轴标题
-    fig.update_xaxes(title_text="日期")
+    fig.update_xaxes(title_text="Date")
     fig.update_yaxes(title_text=name1, secondary_y=False)
     fig.update_yaxes(title_text=name2, secondary_y=True)
     
     fig.update_layout(
-        title=f'{name1} 与 {name2} 走势对比',
+        title=f'Trend Comparison: {name1} vs {name2}',
         height=500,
         template='plotly_white',
         hovermode='x unified'
@@ -199,7 +199,7 @@ def create_dual_axis_chart(df1, df2, name1='指数1', name2='指数2'):
     return fig
 
 
-def create_return_comparison(df1, df2, name1='指数1', name2='指数2'):
+def create_return_comparison(df1, df2, name1='Index 1', name2='Index 2'):
     """
     创建收益率对比图
     
@@ -223,7 +223,7 @@ def create_return_comparison(df1, df2, name1='指数1', name2='指数2'):
     fig = make_subplots(
         rows=2, cols=1,
         shared_xaxes=True,
-        subplot_titles=(f'{name1} 日收益率', f'{name2} 日收益率'),
+        subplot_titles=(f'{name1} Daily Return', f'{name2} Daily Return'),
         vertical_spacing=0.1
     )
     
@@ -232,7 +232,7 @@ def create_return_comparison(df1, df2, name1='指数1', name2='指数2'):
         go.Bar(
             x=merged['date'],
             y=merged['change_pct_1'],
-            name=f'{name1}收益率',
+            name=f'{name1} Return',
             marker_color=['red' if x >= 0 else 'green' for x in merged['change_pct_1']]
         ),
         row=1, col=1
@@ -243,15 +243,15 @@ def create_return_comparison(df1, df2, name1='指数1', name2='指数2'):
         go.Bar(
             x=merged['date'],
             y=merged['change_pct_2'],
-            name=f'{name2}收益率',
+            name=f'{name2} Return',
             marker_color=['red' if x >= 0 else 'green' for x in merged['change_pct_2']]
         ),
         row=2, col=1
     )
     
-    fig.update_xaxes(title_text="日期", row=2, col=1)
-    fig.update_yaxes(title_text="收益率 (%)", row=1, col=1)
-    fig.update_yaxes(title_text="收益率 (%)", row=2, col=1)
+    fig.update_xaxes(title_text="Date", row=2, col=1)
+    fig.update_yaxes(title_text="Return (%)", row=1, col=1)
+    fig.update_yaxes(title_text="Return (%)", row=2, col=1)
     
     fig.update_layout(
         height=700,
@@ -301,11 +301,11 @@ def create_correlation_matrix(data_dict):
         text=corr_matrix.values,
         texttemplate='%{text:.3f}',
         textfont={"size": 12},
-        colorbar=dict(title="相关系数")
+        colorbar=dict(title="Correlation")
     ))
     
     fig.update_layout(
-        title='指数相关性矩阵',
+        title='Index Correlation Matrix',
         height=500,
         template='plotly_white'
     )

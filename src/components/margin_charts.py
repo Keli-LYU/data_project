@@ -21,7 +21,7 @@ def create_margin_trend_chart(df_sh, df_sz):
     fig = make_subplots(
         rows=2, cols=1,
         shared_xaxes=True,
-        subplot_titles=('融资融券余额趋势', '融资余额对比'),
+        subplot_titles=('Margin Trading Balance Trend', 'Financing Balance Comparison'),
         vertical_spacing=0.1,
         row_heights=[0.5, 0.5]
     )
@@ -32,7 +32,7 @@ def create_margin_trend_chart(df_sh, df_sz):
             x=df_sh['date'],
             y=df_sh['margin_balance'] / 100000000,  # 转换为亿元
             mode='lines',
-            name='沪市融资融券余额',
+            name='SH Margin Balance',
             line=dict(color='red', width=2)
         ),
         row=1, col=1
@@ -43,7 +43,7 @@ def create_margin_trend_chart(df_sh, df_sz):
             x=df_sz['date'],
             y=df_sz['margin_balance'] / 100000000,  # 转换为亿元
             mode='lines',
-            name='深市融资融券余额',
+            name='SZ Margin Balance',
             line=dict(color='green', width=2)
         ),
         row=1, col=1
@@ -55,7 +55,7 @@ def create_margin_trend_chart(df_sh, df_sz):
             x=df_sh['date'],
             y=df_sh['financing_balance'] / 100000000,  # 转换为亿元
             mode='lines',
-            name='沪市融资余额',
+            name='SH Financing Balance',
             line=dict(color='orange', width=2)
         ),
         row=2, col=1
@@ -66,16 +66,16 @@ def create_margin_trend_chart(df_sh, df_sz):
             x=df_sz['date'],
             y=df_sz['financing_balance'] / 100000000,  # 转换为亿元
             mode='lines',
-            name='深市融资余额',
+            name='SZ Financing Balance',
             line=dict(color='blue', width=2)
         ),
         row=2, col=1
     )
     
     # 更新布局
-    fig.update_xaxes(title_text="日期", row=2, col=1)
-    fig.update_yaxes(title_text="余额 (亿元)", row=1, col=1)
-    fig.update_yaxes(title_text="余额 (亿元)", row=2, col=1)
+    fig.update_xaxes(title_text="Date", row=2, col=1)
+    fig.update_yaxes(title_text="Balance (100 million yuan)", row=1, col=1)
+    fig.update_yaxes(title_text="Balance (100 million yuan)", row=2, col=1)
     
     fig.update_layout(
         height=800,
@@ -94,7 +94,7 @@ def create_margin_trend_chart(df_sh, df_sz):
     return fig
 
 
-def create_margin_components_chart(df, market_name='沪市'):
+def create_margin_components_chart(df, market_name='Shanghai Market'):
     """
     创建融资融券各组成部分的堆叠面积图
     
@@ -112,7 +112,7 @@ def create_margin_components_chart(df, market_name='沪市'):
         x=df['date'],
         y=df['financing_purchase'] / 100000000,
         mode='lines',
-        name='融资买入',
+        name='Financing Purchase',
         stackgroup='one',
         line=dict(width=0.5, color='rgb(255, 127, 80)')
     ))
@@ -122,15 +122,15 @@ def create_margin_components_chart(df, market_name='沪市'):
         x=df['date'],
         y=df['financing_redeem'] / 100000000,
         mode='lines',
-        name='融资偿还',
+        name='Financing Repayment',
         stackgroup='one',
         line=dict(width=0.5, color='rgb(100, 149, 237)')
     ))
     
     fig.update_layout(
-        title=f'{market_name}融资买入与偿还趋势',
-        xaxis_title='日期',
-        yaxis_title='金额 (亿元)',
+        title=f'{market_name} Financing Purchase and Repayment Trend',
+        xaxis_title='Date',
+        yaxis_title='Amount (100 million yuan)',
         height=500,
         hovermode='x unified',
         template='plotly_white'
@@ -157,7 +157,7 @@ def create_margin_balance_change_chart(df_sh, df_sz):
             x=df_sh['date'],
             y=df_sh['margin_balance_change'],
             mode='lines',
-            name='沪市余额变化率',
+            name='SH Balance Change Rate',
             line=dict(color='red', width=1.5)
         )
     )
@@ -167,7 +167,7 @@ def create_margin_balance_change_chart(df_sh, df_sz):
             x=df_sz['date'],
             y=df_sz['margin_balance_change'],
             mode='lines',
-            name='深市余额变化率',
+            name='SZ Balance Change Rate',
             line=dict(color='green', width=1.5)
         )
     )
@@ -176,9 +176,9 @@ def create_margin_balance_change_chart(df_sh, df_sz):
     fig.add_hline(y=0, line_dash="dash", line_color="gray", opacity=0.5)
     
     fig.update_layout(
-        title='融资融券余额变化率',
-        xaxis_title='日期',
-        yaxis_title='变化率 (%)',
+        title='Margin Trading Balance Change Rate',
+        xaxis_title='Date',
+        yaxis_title='Change Rate (%)',
         height=400,
         hovermode='x unified',
         template='plotly_white'
@@ -187,7 +187,7 @@ def create_margin_balance_change_chart(df_sh, df_sz):
     return fig
 
 
-def create_margin_heatmap(df, market_name='沪市'):
+def create_margin_heatmap(df, market_name='Shanghai Market'):
     """
     创建融资融券月度热力图
     
@@ -218,13 +218,13 @@ def create_margin_heatmap(df, market_name='沪市'):
         text=heatmap_data.values,
         texttemplate='%{text:.0f}',
         textfont={"size": 10},
-        colorbar=dict(title="余额(亿元)")
+        colorbar=dict(title="Balance (100m yuan)")
     ))
     
     fig.update_layout(
-        title=f'{market_name}融资融券月度平均余额热力图',
-        xaxis_title='年份',
-        yaxis_title='月份',
+        title=f'{market_name} Monthly Average Margin Balance Heatmap',
+        xaxis_title='Year',
+        yaxis_title='Month',
         height=500,
         template='plotly_white'
     )
